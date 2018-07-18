@@ -15,7 +15,6 @@ Workflow configuration file
 A simple workflow configuration file::
 
 .. literalinclude:: ../examples/workflow/make_workflow/workflow.ini
-   :language: bash
 
 ============================
 Inference configuration file
