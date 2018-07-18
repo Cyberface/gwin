@@ -12,77 +12,19 @@ The executable ``gwin_make_workflow`` is a workflow generator to setup a paramet
 Workflow configuration file
 ===========================
 
-A simple workflow configuration file::
+A simple workflow configuration file
 
-.. literalinclude:: ../examples/workflow/make_workflow/workflow.ini
+.. literalinclude:: ../../examples/workflow/make_workflow/workflow.ini
+   :language: ini
 
 ============================
 Inference configuration file
 ============================
 
-You will also need a configuration file with sections that tells ``pycbc_inference`` how to construct the priors. A simple inference configuration file is::
+You will also need a configuration file with sections that tells ``pycbc_inference`` how to construct the priors. A simple inference configuration file is
 
-    [model]
-    name = gaussian_noise
-
-    [variable_params]
-    ; parameters to vary in inference sampler
-    tc =
-    mass1 =
-    mass2 =
-    distance =
-    coa_phase =
-    inclination =
-    ra =
-    dec =
-    polarization =
-
-    [static_params]
-    ; parameters that do not vary in inference sampler
-    approximant = SEOBNRv2_ROM_DoubleSpin
-    f_lower = 28.0
-
-    [prior-tc]
-    ; how to construct prior distribution
-    name = uniform
-    min-tc = 1126259462.2
-    max-tc = 1126259462.6
-
-    [prior-mass1]
-    ; how to construct prior distribution
-    name = uniform
-    min-mass1 = 10.
-    max-mass1 = 80.
-
-    [prior-mass2]
-    ; how to construct prior distribution
-    name = uniform
-    min-mass2 = 10.
-    max-mass2 = 80.
-
-    [prior-distance]
-    ; how to construct prior distribution
-    name = uniform
-    min-distance = 10
-    max-distance = 500
-
-    [prior-coa_phase]
-    ; how to construct prior distribution
-    name = uniform_angle
-    ; uniform_angle defaults to [0,2pi), so we
-    ; don't need to specify anything here
-
-    [prior-inclination]
-    ; how to construct prior distribution
-    name = sin_angle
-
-    [prior-ra+dec]
-    ; how to construct prior distribution
-    name = uniform_sky
-
-    [prior-polarization]
-    ; how to construct prior distribution
-    name = uniform_angle
+.. literalinclude:: ../../examples/workflow/make_workflow/gwin.ini
+   :language: ini
 
 A simple configuration file for parameter estimation on the ringdown is::
 
