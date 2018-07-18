@@ -14,7 +14,7 @@ Workflow configuration file
 
 A simple workflow configuration file
 
-.. literalinclude:: ../../examples/workflow/make_workflow/workflow.ini
+.. literalinclude:: ../../examples/workflow/GW150914_example/workflow.ini
    :language: ini
 
 ============================
@@ -23,7 +23,7 @@ Inference configuration file
 
 You will also need a configuration file with sections that tells ``gwin`` how to construct the priors. A simple inference configuration file is
 
-.. literalinclude:: ../../examples/workflow/make_workflow/gwin.ini
+.. literalinclude:: ../../examples/workflow/GW150914_example/gwin.ini
    :language: ini
 
 A simple configuration file for parameter estimation on the ringdown is::
