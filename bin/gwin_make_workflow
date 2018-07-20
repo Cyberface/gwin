@@ -76,6 +76,11 @@ parser.add_argument("--output-map", required=True,
                     help="Path to output map file.")
 parser.add_argument("--output-file", required=True,
                     help="Path to DAX file.")
+parser.add_argument("--submit-dax", action="store_true", default=False,
+                    help="If specified then the dax will be automatically "
+                         "submitted.")
+parser.add_argument("--accounting-group", required=False, default=None,
+                    help="cluster accounting group tag.")
 
 # input workflow file options
 parser.add_argument("--bank-file", default=None,
@@ -115,6 +120,11 @@ opts = parser.parse_args()
 # log to terminal until we know where the path to log output file
 log_format = "%(asctime)s:%(levelname)s : %(message)s"
 logging.basicConfig(format=log_format, level=logging.INFO)
+
+# if dax submission then check an accounting group is parsed
+if opts.submit_dax:
+    assert(opts.accounting_group != None,
+           "Please specify --accounting-group")
 
 # create workflow and sub-workflows
 container = wf.Workflow(opts, opts.workflow_name)
@@ -412,6 +422,21 @@ base = rdir["priors/configuration"]
 wf.makedir(base)
 prior_ini = workflow.save_config("priors.ini", base, cp)
 layout.single_layout(base, prior_ini)
+
+# submit dax if specified
+if opts.submit_dax:
+    logging.info("preparing to submit dax")
+    dax_cmd = "pycbc_submit_dax"
+    dax_opt = "--dax {}.dax ".format(opts.workflow_name) + \
+              "--accounting-group {} ".format(accounting_group) + \
+              "--enable-shared-filesystem"
+
+    import subprocess
+    try:
+        subprocess.call([dax_cmd, dax_opt])
+        logging.info("dax submission successful")
+    except:
+        logging.info("dax submission failed")
 
 # close the log and flush to the html file
 logging.shutdown()
