@@ -428,7 +428,8 @@ if opts.submit_dax:
     dax_cmd = "pycbc_submit_dax "
     dax_opt = "--dax {}.dax ".format(opts.workflow_name) + \
               "--accounting-group {} ".format(opts.accounting_group) + \
-              "--enable-shared-filesystem"
+              "--enable-shared-filesystem " + \
+              "--no-create-proxy"
 
     #import subprocess
     import os
