@@ -33,7 +33,7 @@ from pycbc import results
 from pycbc.results import layout
 from pycbc.types import MultiDetOptionAction
 from pycbc.types import MultiDetOptionAppendAction
-from pycbc.workflow import WorkflowConfigParser
+from pycbc.workflow import WorkflowConfigParser, make_external_call
 
 from gwin import (__version__, workflow as inffu)
 
@@ -425,20 +425,23 @@ layout.single_layout(base, prior_ini)
 # submit dax if specified
 if opts.submit_dax:
     logging.info("preparing to submit dax")
-    dax_cmd = "pycbc_submit_dax "
-    dax_opt = "--dax {}.dax ".format(opts.workflow_name) + \
-              "--accounting-group {} ".format(opts.accounting_group) + \
-              "--enable-shared-filesystem " + \
-              "--no-create-proxy"
+    dax_call = ["pycbc_submit_dax " + \
+                "--dax {}.dax ".format(opts.workflow_name) + \
+                "--accounting-group {} ".format(opts.accounting_group) + \
+                "--enable-shared-filesystem --no-create-proxy"]
+    #TODO: should do some error checking here
+    p=make_external_call(dax_call, shell=True, fail_on_error=False)
 
-    #import subprocess
-    import os
-    try:
-        #subprocess.call([dax_cmd, dax_opt])
-        os.system(dax_cmd +  dax_opt)
-        logging.info("dax submission successful")
-    except:
-        logging.info("dax submission failed")
+    #try:
+    #    logging.info("dax submission successful")
+    #     dax_call = ["pycbc_submit_dax " + \
+    #                 "--dax {}.dax ".format(opts.workflow_name) + \
+    #                 "--accounting-group {} ".format(opts.accounting_group) + \
+    #                 "--enable-shared-filesystem --no-create-proxy"]
+    #     p=make_external_call(dax_call, shell=True, fail_on_error=False)
+    #     logging.info(p)
+    #except:
+    #    logging.info("dax submission failed")
 
 # close the log and flush to the html file
 logging.shutdown()
